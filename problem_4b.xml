@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+
+<simulation name="problem 4a" type="fixed source">
+  <histories start="1" end="1000000" />
+</simulation>
+
+<distributions>
+  <linear_aniso name="linear scatter" datatype="double"  />
+  <isotropic   name="dir dist" datatype="point"/>
+  <uniform     name="isotropic scatter" datatype="double" a="-1.0" b="1.0" />
+  <shell       name="pos dist" datatype="point" i = "1.0" o="2.0" />
+</distributions>
+
+<nuclides>
+  <nuclide name="nuc1"> 
+    <capture xs="1"/>
+    <scatter xs="19" distribution="linear scatter"/>
+  </nuclide>
+  <nuclide name="nuc2">
+    <capture xs="1"/>
+    <scatter xs="4" distribution="isotropic scatter"/>
+  </nuclide>
+  <nuclide name="nuc3"> 
+    <capture xs="59"/>
+    <scatter xs="1" distribution="isotropic scatter"/>
+  </nuclide>
+</nuclides>
+
+<materials>
+  <material name="mat1" density="0.1">
+    <nuclide name="nuc1" frac="0.67"/>
+    <nuclide name="nuc2" frac="0.33"/>
+  </material>
+  <material name="mat2" density="0.005">
+    <nuclide name="nuc3" frac="1.0"/>
+  </material>
+  <material name="mat3" density="0.0">
+    <nuclide name="nuc3" frac="1.0"/>
+  </material>
+</materials>
+
+<surfaces>
+  <plane    name="px1"  a="1.0" b="0.0" c="0.0" d="14.0"/>
+  <plane    name="px2"  a="1.0" b="0.0" c="0.0" d="19.0"/>
+  <cylinder name="cyl1" a="0.0" b="0.0" c="0.0" d="0.5" />
+  <sphere   name="sph1" a="0.0" b="0.0" c="0.0" d="4.0" />
+  <sphere   name="graveyard" a="0.0" b="0.0" c="0.0" d="25.0" />
+</surfaces>
+
+<cells>
+  <cell name="sphere cell" material="mat1" importance="1.0">
+    <surface name="sph1" sense="-1"/>
+  </cell>
+  <cell name="detector cell" material="mat2" importance="1.0">
+    <surface name="px1" sense="+1"/>
+    <surface name="px2" sense="-1"/>
+    <surface name="cyl1" sense="-1"/>
+  </cell>
+  <cell name="outside sphere" material="mat3" importance="1.0">
+    <surface name="px1" sense="-1"/>
+    <surface name="sph1" sense="+1"/>
+    <surface name="graveyard" sense="-1"/>
+  </cell>
+  <cell name="outside cylinder" material="mat3" importance="1.0">
+    <surface name="px1" sense="+1"/>
+    <surface name="px2" sense="-1"/>
+    <surface name="cyl1" sense="+1"/>
+    <surface name="graveyard" sense="-1"/>
+  </cell>
+  <cell name="right of cylinder" material="mat3" importance="1.0">
+    <surface name="px2" sense="+1"/>
+    <surface name="graveyard" sense="-1"/>
+  </cell>
+  <cell name="graveyard cell" importance="0.0">
+    <surface name="graveyard" sense="+1"/>
+  </cell>
+</cells>
+
+<estimators>
+  <path_length name="path length">
+    <cell name="detector cell"/>
+  </path_length>
+</estimators>
+
+<source>
+  <position  distribution="pos dist"/>
+  <direction distribution="dir dist"/>
+</source>
+

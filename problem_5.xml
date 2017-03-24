@@ -1,0 +1,120 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+
+<simulation name="problem 5a" type="fixed source">
+  <histories start="1" end="100000000" />
+</simulation>
+
+<distributions>
+  <linear_aniso name="linear scatter" datatype="double"  />
+  <isotropic   name="dir dist" datatype="point"/>
+  <uniform     name="isotropic scatter" datatype="double" a="-1.0" b="1.0" />
+  <threePoint  name="pos dist" datatype="point" x1="1.5" y1="1.5" z1="0" x2="-1" y2="0" z2="-3" x3="0" y3="-2" z3="1"
+               prob1="1.0" prob2="0.0" prb3="0.0"  />
+</distributions>
+
+<nuclides>
+  <nuclide name="nuc1"> 
+    <capture xs="10"/>
+    <scatter xs="10" distribution="isotropic scatter"/>
+  </nuclide>
+  <nuclide name="nuc2">
+    <capture xs="100"/>
+    <scatter xs="0" distribution="isotropic scatter"/>
+  </nuclide>
+  <nuclide name="nuc3"> 
+    <capture xs="59"/>
+    <scatter xs="1" distribution="isotropic scatter"/>
+  </nuclide>
+</nuclides>
+
+<materials>
+  <material name="mat1" density="0.1">
+    <nuclide name="nuc1" frac="1.0"/>
+  </material>
+  <material name="mat2" density="0.1">
+    <nuclide name="nuc2" frac="1.0"/>
+  </material>
+  <material name="mat3" density="0.0005">
+    <nuclide name="nuc3" frac="1.0"/>
+  </material>
+  <material name="mat4" density="0.0">
+    <nuclide name="nuc3" frac="1.0"/>
+  </material>
+</materials>
+
+<surfaces>
+  <plane    name="pz1"  a="0.0" b="0.0" c="1.0" d="0.0"/>
+  <plane    name="pz2"  a="0.0" b="0.0" c="1.0" d="9.0"/>
+  <plane    name="pz3"  a="0.0" b="0.0" c="1.0" d="4.0"/>
+  <plane    name="pz4"  a="0.0" b="0.0" c="1.0" d="5.0"/>
+  <plane    name="py1"  a="0.0" b="1.0" c="0.0" d="0.0"/>
+  <plane    name="py2"  a="0.0" b="1.0" c="0.0" d="6.0"/>
+  <plane    name="py3"  a="0.0" b="1.0" c="0.0" d="3.0"/>
+  <cylinder name="cyl1" a="0.0" b="1.5" c="6.5" d="0.5" />
+</surfaces>
+
+<cells>
+  <cell name="detector cell" material="mat3" importance="300.0">
+    <surface name="cyl1" sense="-1"/>
+  </cell>
+  <cell name="shield wall" material="mat2" importance="0.1">
+    <surface name="pz3" sense="+1"/>
+    <surface name="pz4" sense="-1"/>
+    <surface name="py1" sense="+1"/>
+    <surface name="py3" sense="-1"/>
+  </cell>
+  <cell name="system1" material="mat1" importance="1.0">
+    <surface name="pz1" sense="+1"/>
+    <surface name="pz3" sense="-1"/>
+    <surface name="py1" sense="+1"/>
+    <surface name="py3" sense="-1"/>
+  </cell>
+  <cell name="system2" material="mat1" importance="1.0">
+    <surface name="pz1" sense="+1"/>
+    <surface name="pz3" sense="-1"/>
+    <surface name="py3" sense="+1"/>
+    <surface name="py2" sense="-1"/>
+  </cell>
+  <cell name="system3" material="mat1" importance="75.0">
+    <surface name="pz3" sense="+1"/>
+    <surface name="pz4" sense="-1"/>
+    <surface name="py3" sense="+1"/>
+    <surface name="py2" sense="-1"/>
+  </cell>
+  <cell name="system4" material="mat1" importance="75.0">
+    <surface name="pz4" sense="+1"/>
+    <surface name="pz2" sense="-1"/>
+    <surface name="py3" sense="+1"/>
+    <surface name="py2" sense="-1"/>
+  </cell>
+   <cell name="system5" material="mat1" importance="80.0">
+    <surface name="pz4" sense="+1"/>
+    <surface name="pz2" sense="-1"/>
+    <surface name="py3" sense="-1"/>
+    <surface name="py1" sense="+1"/>
+  </cell>
+  <cell name="graveyard cell1" importance="0.0">
+    <surface name="pz1" sense="-1"/>
+  </cell>
+  <cell name="graveyard cell2" importance="0.0">
+    <surface name="pz2" sense="+1"/>
+  </cell>
+  <cell name="graveyard cell3" importance="0.0">
+    <surface name="py1" sense="-1"/>
+  </cell>
+  <cell name="graveyard cell4" importance="0.0">
+    <surface name="py2" sense="+1"/>
+  </cell>
+</cells>
+
+<estimators>
+  <path_length name="path length">
+    <cell name="detector cell"/>
+  </path_length>
+</estimators>
+
+<source>
+  <position  distribution="pos dist"/>
+  <direction distribution="dir dist"/>
+</source>
+
