@@ -53,7 +53,7 @@
 </surfaces>
 
 <cells>
-  <cell name="detector cell" material="mat3" importance="300">
+  <cell name="detector cell" material="mat3" importance="300.0">
     <surface name="cyl1" sense="-1"/>
   </cell>
   <cell name="shield wall" material="mat2" importance="0.0001">
@@ -68,25 +68,25 @@
     <surface name="py1" sense="+1"/>
     <surface name="py3" sense="-1"/>
   </cell>
-  <cell name="system2" material="mat1" importance="30">
+  <cell name="system2" material="mat1" importance="50.0">
     <surface name="pz1" sense="+1"/>
     <surface name="pz3" sense="-1"/>
     <surface name="py3" sense="+1"/>
     <surface name="py2" sense="-1"/>
   </cell>
-  <cell name="system3" material="mat1" importance="70">
+  <cell name="system3" material="mat1" importance="70.0">
     <surface name="pz3" sense="+1"/>
     <surface name="pz4" sense="-1"/>
     <surface name="py3" sense="+1"/>
     <surface name="py2" sense="-1"/>
   </cell>
-  <cell name="system4" material="mat1" importance="80">
+  <cell name="system4" material="mat1" importance="80.0">
     <surface name="pz4" sense="+1"/>
     <surface name="pz2" sense="-1"/>
     <surface name="py3" sense="+1"/>
     <surface name="py2" sense="-1"/>
   </cell>
-   <cell name="system5" material="mat1" importance="300">
+   <cell name="system5" material="mat1" importance="300.0">
     <surface name="pz4" sense="+1"/>
     <surface name="pz2" sense="-1"/>
     <surface name="py3" sense="-1"/>

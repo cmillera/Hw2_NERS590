@@ -17,7 +17,7 @@ double linear_distribution::sample() {
   }
 }
 
-double linear_aniso_distribution::sample() {return pow((2.0*Urand()-1.0),2.0);}
+double linear_aniso_distribution::sample() {return -pow((2*Urand()),2)/2+1;}
 
 double exponential_distribution::sample() { return -std::log( Urand() ) / lambda; }
 

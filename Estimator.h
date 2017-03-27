@@ -17,6 +17,7 @@ class estimator {
     std::string estimator_name;
   protected:
     unsigned long long nhist;
+    unsigned long long time;
   public:
      estimator( std::string label ) : estimator_name(label) {};
     ~estimator() {};
@@ -118,17 +119,17 @@ class track_length_estimator : public estimator{
        void report() final {
        double mean = tally_sum / nhist;
        double var  = ( tally_squared / nhist - mean*mean ) / nhist;
-       std::cout << name() << "   " << mean/3.9270 << "   " << std::sqrt( var ) / mean << std::endl;  
+       std::cout << name() << "   " << mean << "   " << std::sqrt( var ) / mean << std::endl;  
        };
         
     void score2( particle*, double, std::shared_ptr< material > );
     virtual void score( particle* ) {};
 };
 
-// volume-averaged scalar flux in a cell
+// absorption scalar flux estimator in a cell
 class cell_pathLengthFlux_estimator : public single_valued_estimator {
   private:
-    double volume=3.9270;
+
   public:
      cell_pathLengthFlux_estimator( std::string label) : 
        single_valued_estimator(label) {};
@@ -139,8 +140,10 @@ class cell_pathLengthFlux_estimator : public single_valued_estimator {
     
     void report() {
        double mean = tally_sum / nhist;
+       //std::cout<<tally_sum<<std::endl;
+       //std::cout<<nhist<<std::endl;
        double var  = ( tally_squared / nhist - mean*mean ) / nhist;
-       std::cout << name() << "   " << mean/volume << "   " << std::sqrt( var ) / mean << std::endl;  
+       std::cout << name() << "   " << mean << "   " << std::sqrt( var ) / mean << std::endl;  
      };
     
 };

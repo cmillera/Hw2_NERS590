@@ -10,12 +10,13 @@ void surface_current_estimator::score( particle* p ) { tally_hist += p->wgt(); }
 void counting_estimator::score( particle* p ) { count_hist++; }
 
 void track_length_estimator::score2( particle* p, double track_length, std::shared_ptr< material > medium)
+//EXPERIMENTAL, not used in final project
 {
     std::shared_ptr< cell > det_cell = p->cellPointer();
     double capxs = medium -> macro_capture_xs();
     double totalxs = medium -> macro_xs();
     
-    tally_hist += p->wgt()*track_length*(capxs);
+    tally_hist += p->wgt()*track_length*(capxs/totalxs);
 };
 
 void counting_estimator::endHistory() {
@@ -42,6 +43,8 @@ void cell_pathLengthFlux_estimator::score2( particle* p, double path_length, std
   
   double capxs = medium -> macro_capture_xs();
     double totalxs = medium -> macro_xs();
-  
+    //std::cout <<"path length" <<path_length << std::endl;
+    //std::cout << "capxs"<<capxs << std::endl;
+    time++;
   tally_hist += p->wgt() * path_length*capxs;
 }

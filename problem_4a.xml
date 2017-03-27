@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 
 <simulation name="problem 4a" type="fixed source">
-  <histories start="1" end="10000000" />
+  <histories start="1" end="100000000" />
 </simulation>
 
 <distributions>
@@ -9,7 +9,7 @@
   <isotropic   name="dir dist" datatype="point"/>
   <uniform     name="isotropic scatter" datatype="double" a="-1.0" b="1.0" />
   <threePoint  name="pos dist" datatype="point" x1="1" y1="1" z1="2" x2="-1" y2="0" z2="-3" x3="0" y3="-2" z3="1"
-               prob1="1.0/6.0" prob2="1.0/3.0" prb3="0.5"  />
+               prob1="0.16666" prob2="0.33333" prb3="0.5"  />
 </distributions>
 
 <nuclides>

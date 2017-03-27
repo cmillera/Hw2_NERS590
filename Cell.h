@@ -38,9 +38,9 @@ class cell {
 
     void attachEstimator( std::shared_ptr< estimator > E ) { cell_estimators.push_back( E ); };
     
-    void cellEvent(particle* p, double track_length, std::shared_ptr< material > medium){
-        for ( auto e : cell_estimators ) {e->score2(p, track_length, medium);}
-    }
+    //void cellEvent(particle* p, double track_length, std::shared_ptr< material > medium){
+        //for ( auto e : cell_estimators ) {e->score2(p, track_length, medium);}
+    //}
 
     //virtual void scoreEstimators( particle* p, double track_length, std::shared_ptr< material > medium) final {
     //void scoreEstimators( particle* p, double track_length, std::shared_ptr< material > medium) {

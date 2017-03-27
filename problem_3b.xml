@@ -33,7 +33,7 @@
 </surfaces>
 
 <cells>
-  <cell name="slab" material="mat1" importance="1.0">
+  <cell name="slab" material="mat1">
     <surface name="px1" sense="+1"/>
     <surface name="px2" sense="-1"/>
   </cell>

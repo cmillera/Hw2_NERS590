@@ -78,13 +78,14 @@ double cylinder::distance( ray r ) {
   point u = r.dir;
 
   // difference between each coordinate and current point
-  point q( p.x - x0, p.y - y0, p.z - z0 );
+  point q( 0, p.y - y0, p.z - z0 );
 
   // put into quadratic equation form: a*s^2 + b*s + c = 0, where a = 1
-  double b = 2.0 * ( q.x * u.x  +  q.y * u.y  +  q.z * u.z );
+  double a = u.y*u.y + u.z*u.z;
+  double b = 2.0 * ( q.y * u.y  +  q.z * u.z );
   double c = eval( p );
 
-  return quad_solve( 1.0, b, c );
+  return quad_solve( a, b, c );
 }
 
 point cylinder::reflect( ray r ) {

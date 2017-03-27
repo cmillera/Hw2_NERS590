@@ -495,36 +495,34 @@ for (int i=1; i<= nhist; i++)
             //sample distance to collision in the cell
             exponential_distribution expDist("CollDist ",current_cell ->macro_xs());
             double dColl = expDist.sample();
-            //cout <<"distance to collision"<<dColl<<endl;
             
             //sample closest surface, and distance to it
             pair <shared_ptr<surface>,double> intersect = current_cell -> surfaceIntersect(p.getRay());
-            //cout<<"distance to surface "<<intersect.second<<endl;
             
             if (intersect.second < dColl)
             {
+
                 double oldImp = current_cell -> getImportance(); // get old imp. before moving
-                
                 current_cell -> moveParticle(&p,intersect.second);
-                current_cell -> cellEvent(&p, intersect.second, current_cell -> getMaterial());
+        
                 intersect.first -> crossSurface(&p);
-                
-                double impRatio =(current_cell -> getImportance())/oldImp; // get ratio of new to old imp
-                
                 for (auto c:cells)
                 { 
                     if (c-> testPoint(p.pos())){current_cell = c; break;}
                 }
+                p.recordCell(current_cell);
+                
+                double impRatio =(current_cell -> getImportance())/oldImp; // get ratio of new to old imp
+
                 if (current_cell -> getImportance() == 0.0)
                 {
                     p.kill();
                 }
                 else if (impRatio < 1.0)
                 {
-                    double n = floor(impRatio + Urand());
-                    if (Urand() < (1/n))
+                    if (Urand() < (impRatio))
                     {
-                        p.adjustWeight(n);
+                        p.adjustWeight(1.0/impRatio);
                     }
                     else{p.kill();}
                 }
@@ -535,7 +533,7 @@ for (int i=1; i<= nhist; i++)
                     {
                         particle q( p.pos(), p.dir() );
                         q.recordCell( p.cellPointer() );
-                        q.adjustWeight(n);
+                        q.adjustWeight(1.0/n);
                         bank.push( q );
                     }
                     p.kill();
@@ -544,16 +542,19 @@ for (int i=1; i<= nhist; i++)
             else
             {
                 current_cell -> moveParticle(&p,dColl);
-                current_cell -> cellEvent(&p, dColl, current_cell -> getMaterial());
+                //current_cell -> cellEvent(&p, dColl, current_cell -> getMaterial());
                 current_cell -> sampleCollision(&p, &bank); //REACTION ROUTINE
             }
             time++;
         }
-    }
+    }    
+    
+    
     for(auto e:estimators)
     {
         e -> endHistory();
     }
+    
 }
 for(auto e:estimators)
 {

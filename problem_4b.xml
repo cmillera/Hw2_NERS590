@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 
 <simulation name="problem 4a" type="fixed source">
-  <histories start="1" end="1000000" />
+  <histories start="1" end="100000000" />
 </simulation>
 
 <distributions>

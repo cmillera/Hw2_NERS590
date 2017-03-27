@@ -17,7 +17,6 @@ void  fission_reaction::sample( particle* p, std::stack< particle >* bank ) {
   // create random number of secondaries from multiplicity distributon and
   // push all but one of them into the bank, and set working particle to the last one
   // if no secondaries, kill the particle
-
   int n = multiplicity_dist->sample();
   if ( n <= 0 ) {
     p->kill();

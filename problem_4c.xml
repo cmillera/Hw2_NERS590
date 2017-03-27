@@ -8,7 +8,7 @@
   <linear_aniso name="linear scatter" datatype="double"  />
   <delta       name="dir dist" datatype="point" x = "0.0"    y = "0.0" z = "1.0" />
   <uniform     name="isotropic scatter" datatype="double" a="-1.0" b="1.0" />
-  <zbeam       name="pos dist" datatype="point" x = "1.0" y="2.0" z="-5.0" rad="2.0"/>
+  <zbeam       name="pos dist" datatype="point" x = "-1.0" y="0.0" z="-5.0" rad="2.0"/>
 </distributions>
 
 <nuclides>
